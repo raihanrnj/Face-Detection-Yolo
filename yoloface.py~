@@ -75,17 +75,17 @@ def _main():
         if not os.path.isfile(args.image):
             print("[!] ==> Input image file {} doesn't exist".format(args.image))
             sys.exit(1)
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(args.image)
         output_file = args.image[:-4].rsplit('/')[-1] + '_yoloface.jpg'
     elif args.video:
         if not os.path.isfile(args.video):
             print("[!] ==> Input video file {} doesn't exist".format(args.video))
             sys.exit(1)
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(args.video)
         output_file = args.video[:-4].rsplit('/')[-1] + '_yoloface.avi'
     else:
         # Get data from the camera
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(args.src)
 
     # Get the video writer initialized to save the output video
     if not args.image:
@@ -123,14 +123,13 @@ def _main():
 
         # initialize the set of information we'll displaying on the frame
         info = [
-             ('Hello Prof. Raihan !', '{}'.format(len(faces))),
-            ('Number of faces detected', '{}'.format(len(faces)))
+            ('number of faces detected', '{}'.format(len(faces)))
         ]
 
         for (i, (txt, val)) in enumerate(info):
             text = '{}: {}'.format(txt, val)
             cv2.putText(frame, text, (10, (i * 20) + 20),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, COLOR_BLUE, 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, COLOR_RED, 2)
 
         # Save the output video to file
         if args.image:

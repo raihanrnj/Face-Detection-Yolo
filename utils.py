@@ -43,10 +43,19 @@ def get_outputs_names(net):
     # Get the names of all the layers in the network
     layers_names = net.getLayerNames()
 
-    # Get the names of the output layers, i.e. the layers with unconnected
-    # outputs
-    return [layers_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
+    # # Get the names of the output layers, i.e. the layers with unconnected
+    # # outputs
+    return [layers_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
+
+
+    # network = cv2.dnn.readNetFromDarknet('yolov3.cfg', 'yolov3.weights')
+    # layers = network.getLayerNames()
+    # return  [layers[i - 1] for i in network.getUnconnectedOutLayers()]
+
+# network = cv2.dnn.readNetFromDarknet('yolov3.cfg', 'yolov3.weights')
+# layers = network.getLayerNames()
+# yolo_layers = [layers[i - 1] for i in network.getUnconnectedOutLayers()]
 
 # Draw the predicted bounding box
 def draw_predict(frame, conf, left, top, right, bottom):
@@ -94,7 +103,7 @@ def post_process(frame, outs, conf_threshold, nms_threshold):
                                nms_threshold)
 
     for i in indices:
-        i = i[0]
+        i = i
         box = boxes[i]
         left = box[0]
         top = box[1]
